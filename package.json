@@ -1,0 +1,29 @@
+{
+  "name": "korean-fund-raising",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2022-blockchain-dapp/korean-fund-raising.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.3.0"
+  },
+  "bugs": {
+    "url": "https://github.com/2022-blockchain-dapp/korean-fund-raising/issues"
+  },
+  "homepage": "https://github.com/2022-blockchain-dapp/korean-fund-raising#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
