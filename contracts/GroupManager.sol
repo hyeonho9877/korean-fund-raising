@@ -8,8 +8,8 @@ contract GroupManager {
     uint32 private groupCount = 1; // 그룹 아이디 인덱스
 
     event outOfLimit(); // 잔고나 인원수 제한에 도달했을 때 이벤트
-    event notMember(uint32 groupID, address from); // groupID에 해당하는 그룹에 멤버가 아닐 경우
-    event alreadyJoined(uint32 groupID, address from);
+    event notMember(uint32 groupID, address from); // groupID에 해당하는 그룹에 멤버가 아닐 경우의 이벤트
+    event alreadyJoined(uint32 groupID, address from); // 이미 해당 그룹에 가입돼있는 경우의 이벤트
 
     constructor() {
         owner = msg.sender;
@@ -128,6 +128,11 @@ contract GroupManager {
     }
 
     function getGroupMembers(uint32 groupID) public view returns(address[10] memory members){
+        require(groupToMembers[groupID][0] != address(0));
         return groupToMembers[groupID];
+    }
+
+    function getGroupBalance(uint32 groupID) public view returns(uint balance){
+        return groupToBalance[groupID];
     }
 }
