@@ -8,7 +8,8 @@ contract GroupManager {
     uint32 private groupCount = 1; // 그룹 아이디 인덱스
 
     event outOfLimit(); // 잔고나 인원수 제한에 도달했을 때 이벤트
-    event notMember(uint32 groupID, address from);
+    event notMember(uint32 groupID, address from); // groupID에 해당하는 그룹에 멤버가 아닐 경우
+    event alreadyJoined(uint32 groupID, address from);
 
     constructor() {
         owner = msg.sender;
@@ -58,7 +59,7 @@ contract GroupManager {
         // 아닐 경우 이벤트 발생후, 트랜잭션 revert
         if (i==10){
             emit notMember(groupID, msg.sender);
-            revert();
+            return 0;
         }
         // 그룹의 잔고를 msg.value 만큼 감소
         groupToBalance[groupID] -= msg.value;
@@ -71,9 +72,14 @@ contract GroupManager {
         // 가입을 신청하는 사람의 남은 가용 그룹수 확인
         uint8 senderGroupCount = canJoinOtherGroup();
 
-        // 더 이상 그룹을 생성하거나 가입 할 수 없는 경우, 이벤트 발생 후 false 리턴
+        // 더 이상 그룹을 생성하거나 가입 할 수 없는 경우, 이벤트 발생
         if(senderGroupCount == 10) {
             emit outOfLimit();
+            return false;
+        }
+        // 이미 가입된 그룹의 경우 해당하는 이벤트 발생
+        if(isAlreadyJoined(groupID)){
+            emit alreadyJoined(groupID, msg.sender);
             return false;
         }
 
@@ -83,7 +89,7 @@ contract GroupManager {
             if(groupToMembers[groupID][i] == address(0)) break;
         }
 
-        // 자리가 없으면 이벤트 발생 후 false 리턴
+        // 자리가 없으면 이벤트 발생
         if(i==10) {
             emit outOfLimit();
             return false;
@@ -104,6 +110,17 @@ contract GroupManager {
         }
 
         return i;
+    }
+
+    function isAlreadyJoined(uint32 groupID) private returns(bool){
+        uint8 i;
+
+        // 자신이 만들거나 속해 있는 그룹의 수를 확인
+        for (i=0; i<10; i++){
+            if (groupToMembers[groupID][i] == msg.sender) return true;
+            else if (groupToMembers[groupID][i] == address(0)) return false;
+        }
+        return false;
     }
 
     function getGroupID() public view returns(uint32[10] memory groups) {
