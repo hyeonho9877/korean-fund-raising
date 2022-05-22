@@ -1,14 +1,10 @@
-// const { ethers } = require("ethers");
 
-async function connect(){
-    if(typeof window.ethereum !== "undefined"){
-       await ethereum.request({method: "eth_requestAccounts"})
-    }
-};
- 
+
+if (typeof web3 !== 'undefined') { web3 = new Web3(web3.currentProvider); } 
+
+
 async function connect() {
     if (typeof window.ethereum !== "undefined") {
-
       try {
         await ethereum.request({ method: "eth_requestAccounts" });
       } catch (error) {
