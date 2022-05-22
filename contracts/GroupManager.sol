@@ -34,7 +34,7 @@ contract GroupManager {
         }
 
         // 생성한 그룹에 그룹 아이디를 할당 (그룹을 생성한 것과 동일)
-        addressToGroup[msg.sender][index] = groupCount;
+        addressToGroup[msg.sender][i] = groupCount;
         // 생성한 그룹의 첫 번째 멤버로 msg.sender 할당
         groupToMembers[groupCount][0] = msg.sender;
         return groupCount++;
@@ -90,7 +90,7 @@ contract GroupManager {
         }
 
         // 가입하려는 그룹에 msg.sender 할당 및 msg.sender의 그룹 현황 갱신
-        groupToMembers[groupID][seat] = msg.sender;
+        groupToMembers[groupID][i] = msg.sender;
         addressToGroup[msg.sender][senderGroupCount] = groupID;
         return true;
     }
