@@ -30,6 +30,8 @@
 
 * [솔리디티 공식 문서](https://docs.soliditylang.org/en/v0.8.14/)
 
+  * [솔리디티 공식 문서(한글 번역)](https://solidity-kr.readthedocs.io/ko/latest/index.html)
+
 * [Express.js API 문서](https://expressjs.com/en/4x/api.html)
 
 * [Web3.js API 문서](https://web3js.readthedocs.io/en/v1.7.3/)
