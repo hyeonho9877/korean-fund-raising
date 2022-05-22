@@ -4,19 +4,113 @@
 <head>
   <meta charset="utf-8">
   <title>Welcome | 탈중앙화 계모임</title>
+
+  <style>
+    li {
+      list-style: none;
+    }
+
+
+    h1 {
+      text-align: center;
+    }
+
+    .wrap {
+      width: 100%;
+      height: 700px;
+      /* background: yellow; */
+    }
+
+    #btnConnect {
+      margin: auto;
+      margin-top: 100px;
+      width: 300px;
+      height: 50px;
+      border-radius: 35px;
+      background-color: rgb(60, 199, 134);
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    #btnConnect:hover {
+      transform: scale(1.05);
+    }
+
+    #dashBoard {
+      margin: auto;
+      margin-top: 70px;
+
+    }
+
+    table {
+      width: 100%;
+      border-top: 1px solid #444444;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #444444;
+      padding: 10px;
+      text-align: center;
+    }
+
+    #btnDetail{
+      margin: auto;
+      margin-top: 30px;
+      width: 150px;
+      height: 30px;
+      border-radius: 15px;
+      background-color: rgb(28, 177, 165);
+      color: #fff;
+      text-align: center;
+      line-height: 30px;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Welcome! 탈중앙화 계모임을 소개합니다.</h1>
-  <script src="index.js"></script>
+  <div class="wrap">
+    <h1>Welcome! 탈중앙화 계모임을 소개합니다.</h1>
+    <script src="index.js"></script>
 
-  <div id="btnConnect" onclick="connect();">여기를 눌러 메타마스크를 연결</div>
-  <button id="executeButton" onclick="execute()">Execute</button>
+    <div id="btnConnect" onclick="connect();" style="cursor:pointer;">여기를 눌러 메타마스크를 연결</div>
+    <!-- <button id="executeButton" onclick="execute()">Execute</button> -->
 
-  <script>
+    <div id="dashBoard" style="display: none">
+      <!-- hard coding -->
+      <table>
+        <thead>
+          <tr>
+            <th>이름</th>
+            <th>기간</th>
+            <th>금액</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alice</td><td>Ipsum</td><td>2000</td>
+          </tr>
+          <tr>
+            <td>Bob</td><td>Ipsum</td><td>2500</td>
+          </tr>
+          <tr>
+            <td>Charile</td><td>Ipsum</td><td>3000</td>
+          </tr>
+          <tr>
+            <td>Danny</td><td>Ipsum</td><td>7000</td>
+          </tr>
+          <tr>
+            <td>Echo</td><td>Ipsum</td><td>3500</td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보창</div>
+    </div>
+  </div>
 
-    
-  </script>
 </body>
+
 
 </html>

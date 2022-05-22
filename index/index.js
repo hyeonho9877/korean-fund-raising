@@ -1,8 +1,3 @@
-
-
-if (typeof web3 !== 'undefined') { web3 = new Web3(web3.currentProvider); } 
-
-
 async function connect() {
     if (typeof window.ethereum !== "undefined") {
       try {
@@ -10,9 +5,11 @@ async function connect() {
       } catch (error) {
         console.log(error);
       }
-      document.getElementById("btnConnect").innerHTML = "Connected";
       const accounts = await ethereum.request({ method: "eth_accounts" });
-      console.log(accounts);
+      document.getElementById("btnConnect").innerHTML = "Connected";
+
+    //   dash board 보이기
+      document.getElementById("dashBoard").style.display = "block";
 
     } else {
       document.getElementById("btnConnect").innerHTML =
@@ -21,6 +18,7 @@ async function connect() {
   }
   
 
+//   for contract adress / abi
 //   async function execute() {
 //     if (typeof window.ethereum !== "undefined") {
 //       contractAddress = "0x1905408Cc8DbCBC5B9137Fb5b0069581b2B43B82";
