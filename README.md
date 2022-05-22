@@ -20,11 +20,22 @@
 
   일정 인원 이상의 동의가 있을 경우 해당 자금을 출금할 수 있음.
 
-## 기술 스택
+### 기술 스택
 
 * Ethereum / Truffle / Ganache
 
 * Express.js
+
+## 연동 및 실행
+
+Ganache에서 `truffle-config.js`를 불러들여 truffle과 연동합니다.
+
+```bash
+truffle compile
+truffle migrate
+npm install
+node app.js
+```
 
 ## 참고
 
