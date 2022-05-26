@@ -15,6 +15,10 @@
       text-align: center;
     }
 
+    h3 {
+      text-align: center;
+    }
+
     .wrap {
       width: 100%;
       height: 700px;
@@ -43,19 +47,6 @@
 
     }
 
-    table {
-      width: 100%;
-      border-top: 1px solid #444444;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      border-bottom: 1px solid #444444;
-      padding: 10px;
-      text-align: center;
-    }
-
     #btnDetail{
       margin: auto;
       margin-top: 30px;
@@ -67,12 +58,45 @@
       text-align: center;
       line-height: 35px;
     }
+
+    table {
+      border-collapse: collapse;
+      text-align: left;
+      line-height: 1.5;
+      border: 1px solid #ccc;
+      margin: 20px 10px;
+    }
+    table thead th {
+      width: 150px;
+      padding: 10px;
+      font-weight: bold;
+      vertical-align: top;
+      color: #fff;
+      background: #5f6cd4;
+      margin: 20px 10px;
+    }
+    table tbody th {
+      width: 150px;
+      padding: 10px;
+    }
+    table td {
+      width: 350px;
+      padding: 10px;
+      vertical-align: top;
+    }
+    table .even {
+      background: #ccd2ff;
+    }
+
+
+
+
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <h1>Welcome! 탈중앙화 계모임을 소개합니다.</h1>
+    <h1>탈중앙화 계모임에 오신 것을 환영합니다!</h1>
     <script src="index.js"></script>
 
     <div id="btnConnect" onclick="connect();" style="cursor:pointer;">여기를 눌러 메타마스크를 연결</div>
@@ -80,33 +104,44 @@
 
     <div id="dashBoard" style="display: none">
       <!-- hard coding -->
+      <h3>내가 속한 그룹 목록</h3>
       <table>
         <thead>
           <tr>
-            <th>이름</th>
-            <th>기간</th>
-            <th>금액</th>
+            <th scope="cols">이름</th>
+            <th scope="cols">기간</th>
+            <th scope="cols">금액</th>
+            <th scope="cols">세부정보</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Alice</td><td>Ipsum</td><td>2000</td>
+            <th scope="row">그룹 1</th>
+            <td>Ipsum</td><td>2000</td>
+            <td><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
           </tr>
           <tr>
-            <td>Bob</td><td>Ipsum</td><td>2500</td>
+            <th scope="row" class="even">그룹 2</th>
+            <td class="even">Ipsum</td><td class="even">2500</td>
+            <td class="even"><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
           </tr>
           <tr>
-            <td>Charile</td><td>Ipsum</td><td>3000</td>
+            <th scope="row">그룹 3</th>
+            <td>Ipsum</td><td>3000</td>
+            <td><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
           </tr>
           <tr>
-            <td>Danny</td><td>Ipsum</td><td>7000</td>
+            <th scope="row" class="even">그룹 4</th><td class="even">Ipsum</td><td class="even">7000</td>
+            <td class="even"><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
           </tr>
           <tr>
-            <td>Echo</td><td>Ipsum</td><td>3500</td>
+            <th scope="row">그룹 5</th><td>Ipsum</td><td>3500</td>
+            <td><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
           </tr>
         </tbody>
       </table>
-      <div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보창</div>
+      <br><br><br><br><br><br>
+      
     </div>
   </div>
 
