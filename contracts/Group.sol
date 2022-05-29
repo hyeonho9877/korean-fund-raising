@@ -3,23 +3,31 @@ pragma solidity ^0.8.0;
 import "./GroupManager.sol";
 
 contract Group {
-    // State variables
+    // 그룹 개설자
     address payable private creator;
+    // 출금 요청자
     address payable private requester;
+    // 출금 요청액
     uint private requestAmount;
+    // 멤버들의 address 배열
     address[10] members;
+    // 현재 잔액
     uint256 private currentBalance;
+    // 그룹의 이름
     string private groupName;
+    // 그룹의 설명
     string private groupDesc;
+    // 동의 현황
     uint8 private agreement;
+    // 현재 출금 요청을 처리 중이니 나타내는 bool 변수
     bool private isRaising;
+    // 그룹 매니저 컨트랙트
     GroupManager private manager;
 
-    // event fundingReceived(address contributor, uint amount, uint currentTotal);
-    event transferAdmit(uint amount, address to);
-    event outOfLimit(); // 잔고나 인원수 제한에 도달했을 때 이벤트
-    event notMember(uint32 groupID, address from); // groupID에 해당하는 그룹에 멤버가 아닐 경우의 이벤트
-    event alreadyJoined(address groupAddress, address from); // 이미 해당 그룹에 가입돼있는 경우의 이벤트
+    event transferAdmit(uint amount, address to); // 요청에 의한 출금이 완료되었음
+    event outOfLimit(); // 잔고나 인원수 제한에 도달하였음
+    event notMember(uint32 groupID, address from); // groupID에 해당하는 그룹에 멤버가 아님
+    event alreadyJoined(address groupAddress, address from); // 이미 해당 그룹에 가입되어 있음
 
     constructor(address payable owner, string memory name, string memory desc, address _GroupManager) {
         creator = owner;
@@ -33,11 +41,13 @@ contract Group {
         manager = GroupManager(_GroupManager);
     }
 
+    // 그룹에 대한 입금 메소드
     function deposit() payable public {
         require(msg.value > 0);
         currentBalance += msg.value;
     }
 
+    // 그룹에 대한 출금 요청 메소드
     function requestWithdraw(uint amount) public {
         require(!isRaising);
         require(isAlreadyJoined());
@@ -47,9 +57,11 @@ contract Group {
         isRaising = true;
     }
 
+    // 그룹에서 진행되고 있는 출금 요청에 대한 동의를 반영하는 메소드
     function agree() public {
         require(msg.sender != requester);
         require(requester != address(0));
+        require(isAlreadyJoined());
         agreement += 1;
         if (agreement >= halfOfMember()) {
             address payable targetAddress = requester;
@@ -64,6 +76,7 @@ contract Group {
         }
     }
 
+    // 출금 요청을 취소하는 메소드
     function cancelRequest() public {
         require(requester == msg.sender);
         require(isRaising);
@@ -73,6 +86,7 @@ contract Group {
         isRaising = false;
     }
 
+    // 현재 멤버의 절반에 해당하는 인원수를 계산하는 메소드
     function halfOfMember() private view returns (uint8 half) {
         require(members[0] != address(0));
         uint8 i;
@@ -82,6 +96,7 @@ contract Group {
         half = i / 2;
     }
 
+    // 그룹의 상태를 확인하는 메소드
     function getDetails() public view returns (address payable owner, string memory name, string memory desc, uint256 balance, address[10] memory membersResponse, address currentRequester, bool isCurrentRaising, uint currentRequestAmount) {
         owner = creator;
         name = groupName;
@@ -93,6 +108,7 @@ contract Group {
         currentRequestAmount = requestAmount;
     }
 
+    // 그룹에 가입하는 메소드
     function joinGroup() external returns (bool result){
         if (isAlreadyJoined()) {
             emit alreadyJoined(address(this), msg.sender);
@@ -113,6 +129,7 @@ contract Group {
         return true;
     }
 
+    // 이미 그룹에 가입된 계정인지 확인하는 메소드
     function isAlreadyJoined() private view returns (bool){
         bool result = false;
         uint8 i;
@@ -126,6 +143,7 @@ contract Group {
         return result;
     }
 
+    // 현재 그룹의 여유 자리를 계산하는 메소드
     function findSeat() private view returns (uint){
         uint i;
         for (i = 0; i < 10; i++) {
