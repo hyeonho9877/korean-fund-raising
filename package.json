@@ -25,6 +25,7 @@
   "homepage": "https://github.com/2022-blockchain-dapp/korean-fund-raising#readme",
   "dependencies": {
     "express": "^4.18.1",
+    "openzeppelin-solidity": "^4.6.0",
     "web3": "^1.7.3"
   }
 }
