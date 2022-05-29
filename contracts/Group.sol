@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AFL-3.0
 pragma solidity ^0.8.0;
+import "./GroupManager.sol";
 
 contract Group {
     // State variables
@@ -12,6 +13,7 @@ contract Group {
     string private groupDesc;
     uint8 private agreement;
     bool private isRaising;
+    GroupManager private manager;
 
     // event fundingReceived(address contributor, uint amount, uint currentTotal);
     event transferAdmit(uint amount, address to);
@@ -19,7 +21,7 @@ contract Group {
     event notMember(uint32 groupID, address from); // groupID에 해당하는 그룹에 멤버가 아닐 경우의 이벤트
     event alreadyJoined(address groupAddress, address from); // 이미 해당 그룹에 가입돼있는 경우의 이벤트
 
-    constructor(address payable owner, string memory name, string memory desc) {
+    constructor(address payable owner, string memory name, string memory desc, address _GroupManager) {
         creator = owner;
         members[0] = creator;
         groupName = name;
@@ -28,6 +30,7 @@ contract Group {
         agreement = 0;
         requestAmount = 0;
         isRaising = false;
+        manager = GroupManager(_GroupManager);
     }
 
     function deposit() payable public {
@@ -100,7 +103,13 @@ contract Group {
             emit outOfLimit();
             return false;
         }
+        uint8 remainingSeat = manager.getMyGroupCount(msg.sender);
+        if(remainingSeat==10){
+            emit outOfLimit();
+            return false;
+        }
         members[seat] = msg.sender;
+        manager.updateMyGroup(msg.sender, address(this), remainingSeat);
         return true;
     }
 
