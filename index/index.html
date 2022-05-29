@@ -37,7 +37,23 @@
       line-height: 50px;
     }
 
+    #btnCreateGroup {
+      margin: auto;
+      margin-top: 100px;
+      width: 300px;
+      height: 50px;
+      border-radius: 35px;
+      background-color: rgb(60, 199, 134);
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+    }
+
     #btnConnect:hover {
+      transform: scale(1.05);
+    }
+
+    #btnCreateGroup:hover {
       transform: scale(1.05);
     }
 
@@ -140,9 +156,13 @@
           </tr>
         </tbody>
       </table>
-      <br><br><br><br><br><br>
-      
+
+      <div id="btnCreateGroup" onclick="createGroup();" style="cursor:pointer;">새로운 그룹 만들기</div>
+    
+      <br><br><br><br><br><br><br><br>
+
     </div>
+
   </div>
 
 </body>
