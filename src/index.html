@@ -1,10 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="utf-8">
+  <title>Welcome | 탈중앙화 계모임</title>
+
+  <style>
+    li {
+      list-style: none;
+    }
+
+
+    h1 {
+      text-align: center;
+    }
+
+    h3 {
+      text-align: center;
+    }
+
+    .wrap {
+      width: 100%;
+      height: 700px;
+      /* background: yellow; */
+    }
+
+    #btnConnect {
+      margin: auto;
+      margin-top: 100px;
+      width: 300px;
+      height: 50px;
+      border-radius: 35px;
+      background-color: rgb(60, 199, 134);
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    #btnCreateGroup {
+      margin: auto;
+      margin-top: 100px;
+      width: 300px;
+      height: 50px;
+      border-radius: 35px;
+      background-color: rgb(60, 199, 134);
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    #btnConnect:hover {
+      transform: scale(1.05);
+    }
+
+    #btnCreateGroup:hover {
+      transform: scale(1.05);
+    }
+
+    #dashBoard {
+      margin: auto;
+      margin-top: 70px;
+
+    }
+
+    #btnDetail{
+      margin: auto;
+      margin-top: 30px;
+      width: 130px;
+      height: 35px;
+      border-radius: 15px;
+      background-color: rgba(28, 177, 165, 0.836);
+      color: #fff;
+      text-align: center;
+      line-height: 35px;
+    }
+
+    table {
+      border-collapse: collapse;
+      text-align: left;
+      line-height: 1.5;
+      border: 1px solid #ccc;
+      margin: 20px 10px;
+    }
+    table thead th {
+      width: 150px;
+      padding: 10px;
+      font-weight: bold;
+      vertical-align: top;
+      color: #fff;
+      background: #5f6cd4;
+      margin: 20px 10px;
+    }
+    table tbody th {
+      width: 150px;
+      padding: 10px;
+    }
+    table td {
+      width: 350px;
+      padding: 10px;
+      vertical-align: top;
+    }
+    table .even {
+      background: #ccd2ff;
+    }
+
+
+
+
+  </style>
 </head>
+
 <body>
-<h1>hello</h1>
+  <div class="wrap">
+    <h1>탈중앙화 계모임에 오신 것을 환영합니다!</h1>
+    <script src="index/index.js"></script>
+
+    <div id="btnConnect" onclick="connect();" style="cursor:pointer;">여기를 눌러 메타마스크를 연결</div>
+    <!-- <button id="executeButton" onclick="execute()">Execute</button> -->
+
+    <div id="dashBoard" style="display: none">
+      <!-- hard coding -->
+      <h3>내가 속한 그룹 목록</h3>
+      <table>
+        <thead>
+          <tr>
+            <th scope="cols">이름</th>
+            <th scope="cols">기간</th>
+            <th scope="cols">금액</th>
+            <th scope="cols">세부정보</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">그룹 1</th>
+            <td>Ipsum</td><td>2000</td>
+            <td><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="even">그룹 2</th>
+            <td class="even">Ipsum</td><td class="even">2500</td>
+            <td class="even"><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
+          </tr>
+          <tr>
+            <th scope="row">그룹 3</th>
+            <td>Ipsum</td><td>3000</td>
+            <td><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="even">그룹 4</th><td class="even">Ipsum</td><td class="even">7000</td>
+            <td class="even"><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
+          </tr>
+          <tr>
+            <th scope="row">그룹 5</th><td>Ipsum</td><td>3500</td>
+            <td><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div id="btnCreateGroup" onclick="createGroup();" style="cursor:pointer;">새로운 그룹 만들기</div>
+    
+      <br><br><br><br><br><br><br><br>
+
+    </div>
+
+  </div>
+
 </body>
+
+
 </html>
