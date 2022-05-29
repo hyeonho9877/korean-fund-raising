@@ -17,7 +17,7 @@ contract GroupManager {
 
     // 새로운 그룹을 생성하는 메소드
     function createGroup(string calldata title, string calldata description) external {
-        uint8 index = getMyGroupCount();
+        uint8 index = getMyGroupCount(msg.sender);
         require(index != 10);
         Group newGroup = new Group(payable(msg.sender), title, description, address(this));
         joinedGroups[msg.sender][index] = address(newGroup);
@@ -30,7 +30,7 @@ contract GroupManager {
     }
 
     // 자신이 속해있는 그룹의 개수를 확인하는 메소드
-    function getMyGroupCount(address target) external view returns(uint8){
+    function getMyGroupCount(address target) public view returns(uint8){
         uint8 i;
         for (i = 0; i < 10; i++) {
             if (joinedGroups[target][i] == address(0)) break;
