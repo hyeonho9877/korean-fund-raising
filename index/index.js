@@ -14,10 +14,6 @@ async function load_first() {
   getTBodyFromGetMyGroup();
 }
 
-async function manager() {
-  managerContract.methods.createGroup('a', 'b').call();
-}
-
 async function createGroup() {
   var createGroupGas = await managerContract.methods.createGroup('a', 'b').estimateGas();
   var tx = await managerContract.methods.createGroup('a', 'b').send({from: addresses[0], gas: createGroupGas});
@@ -35,6 +31,7 @@ async function connect() {
     }
     const accounts = await ethereum.request({ method: "eth_accounts" });
     document.getElementById("btnConnect").innerHTML = "연결됨";
+
 
     //   dash board 보이기
     document.getElementById("dashBoard").style.display = "block";
