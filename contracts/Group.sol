@@ -143,6 +143,18 @@ contract Group {
         return result;
     }
 
+    // 이미 그룹에 가입된 계정인지 확인하는 메소드
+    function isAlreadyJoined(address target) private view returns (uint8){
+        uint8 i;
+        for (i = 0; i < 10; i++) {
+            if (members[i] == address(0)) return 10;
+            else if (members[i] == target) {
+                break;
+            }
+        }
+        return i;
+    }
+
     // 현재 그룹의 여유 자리를 계산하는 메소드
     function findSeat() private view returns (uint){
         uint i;
@@ -150,5 +162,24 @@ contract Group {
             if (members[i] == address(0)) break;
         }
         return i;
+    }
+
+    // 멤버 추방 메소드
+    function kick(address badUser) external {
+        require(msg.sender == creator);
+        uint8 seat = isAlreadyJoined(badUser);
+        require(seat!=10);
+        members[seat] = address(0);
+        reorderMembers(seat);
+    }
+
+    function reorderMembers(uint8 index) private {
+        for(uint8 i=index+1;i<10;i++){
+            if(members[i]==address(0)) {
+                members[i-1] = address(0);
+                break;
+            }
+            members[i-1] = members[i];
+        }
     }
 }
