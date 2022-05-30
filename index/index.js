@@ -7,16 +7,29 @@ async function load_first() {
   web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
 
   var managerContract = new web3.eth.Contract(contractABI, contractAddress);
-  managerContract.methods.createGroup('a', 'b').call();
 
   var addresses = await web3.eth.getAccounts();
-  console.log(addresses);
+  // var createGroupGas = await managerContract.methods.createGroup('a', 'b').estimateGas();
+  // var tx = await managerContract.methods.createGroup('a', 'b').send({from: addresses[0], gas: createGroupGas});
 
-  // manager(web3);
+  // console.log(tx.transactionHash);
+  
+  
+  managerContract.methods.getMyGroup().call((err, res) => {
+    document.getElementById('dashBoardBody').innerHTML = res.map((e) => {
+      if (e == 0) {
+        return;
+      }
+      return "<tr>" + 
+          "<th scope=\"row\">"+e+"</th>"+
+          "<td>Ipsum</td><td>2000</td>" + 
+          "<td><div id=\"btnDetail\" onclick=\"location.href='../detail/index.html'\" style=\"cursor: pointer;\">그룹 세부정보</div></td>"+
+        "</tr>";
+    });
+  })
 }
 
 async function manager() {
-  // window.web
   managerContract.methods.createGroup('a', 'b').call();
 }
 
