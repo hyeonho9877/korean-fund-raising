@@ -10,7 +10,6 @@
       list-style: none;
     }
 
-
     h1 {
       text-align: center;
     }
@@ -22,7 +21,7 @@
     .wrap {
       width: 100%;
       height: 700px;
-      /* background: yellow; */
+      background: yellow;
     }
 
     #btnConnect {
@@ -65,11 +64,11 @@
 
     #btnDetail{
       margin: auto;
-      margin-top: 30px;
-      width: 130px;
+      width: 100px;
       height: 35px;
       border-radius: 15px;
-      background-color: rgba(28, 177, 165, 0.836);
+      font-size: 13px;
+      background-color: rgba(28, 88, 177, 0.836);
       color: #fff;
       text-align: center;
       line-height: 35px;
@@ -77,11 +76,12 @@
 
     table {
       border-collapse: collapse;
-      text-align: left;
-      line-height: 1.5;
+      text-align: center;
       border: 1px solid #ccc;
       margin: 20px 10px;
+      line-height: 35px;
     }
+
     table thead th {
       width: 150px;
       padding: 10px;
@@ -91,18 +91,22 @@
       background: #5f6cd4;
       margin: 20px 10px;
     }
+
     table tbody th {
       width: 150px;
       padding: 10px;
     }
+
     table td {
       width: 350px;
       padding: 10px;
       vertical-align: top;
     }
+    
     table .even {
       background: #ccd2ff;
     }
+
 
 
 
@@ -118,15 +122,13 @@
 
     <div id="btnConnect" onclick="connect();" style="cursor:pointer;">여기를 눌러 메타마스크를 연결</div>
     <!-- <button id="executeButton" onclick="execute()">Execute</button> -->
-    <div id="btnConnect" onclick="manager();" style="cursor:pointer;">ha</div>
-
     <div id="dashBoard" style="display: none">
-      <!-- hard coding -->
       <h3>내가 속한 그룹 목록</h3>
       <table>
         <thead>
           <tr>
             <th scope="cols">이름</th>
+            <th scope="cols">설명</th>
             <th scope="cols">기간</th>
             <th scope="cols">금액</th>
             <th scope="cols">세부정보</th>
@@ -160,8 +162,7 @@
       </table>
 
       <div id="btnCreateGroup" onclick="createGroup();" style="cursor:pointer;">새로운 그룹 만들기</div>
-    
-      <br><br><br><br><br><br><br><br>
+
 
     </div>
 
