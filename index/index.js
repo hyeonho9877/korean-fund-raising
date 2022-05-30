@@ -38,3 +38,24 @@ async function connect() {
       "MetaMask를 설치해주세요";
   }
 }
+
+function showMyGroup(){
+  var groyoAddress = managerContract.methods.etMyGroup(getAccounts).call();
+  let count = 0;
+  for (let i =0;i<10;i++){
+    if(groupAddress[i] != '0x00000000000000'){
+      count++;
+    }
+  }
+  document.write('<table>');
+  for(let i=0;i<count;i++){
+    document.write('<tr>');
+    for(let j=0;j<3;j++){
+      document.write('<td>');
+      document.write(groupAddress[i], getgroupbalance, address); /
+      document.write('</td>');
+    }
+    document.write('</tr>')
+  }
+  document.write(</table>);
+}
