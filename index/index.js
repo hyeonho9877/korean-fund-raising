@@ -187,20 +187,50 @@ const groupABI = [
   }
 ];
 var web3;
+var managerContract;
+var addresses;
 
 window.onload = load_first;
 async function load_first() {
   web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
 
-  var managerContract = new web3.eth.Contract(contractABI, contractAddress);
+  managerContract = new web3.eth.Contract(contractABI, contractAddress);
+  addresses = await web3.eth.getAccounts();
+  getTBodyFromGetMyGroup();
+}
 
-  var addresses = await web3.eth.getAccounts();
-  // var createGroupGas = await managerContract.methods.createGroup('a', 'b').estimateGas();
-  // var tx = await managerContract.methods.createGroup('a', 'b').send({from: addresses[0], gas: createGroupGas});
+async function manager() {
+  managerContract.methods.createGroup('a', 'b').call();
+}
 
-  // console.log(tx.transactionHash);
-  
-  
+async function createGroup() {
+  var createGroupGas = await managerContract.methods.createGroup('a', 'b').estimateGas();
+  var tx = await managerContract.methods.createGroup('a', 'b').send({from: addresses[0], gas: createGroupGas});
+
+  console.log(tx.transactionHash);
+  getTBodyFromGetMyGroup();
+}
+
+async function connect() {
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      await ethereum.request({ method: "eth_requestAccounts" });
+    } catch (error) {
+      console.log(error);
+    }
+    const accounts = await ethereum.request({ method: "eth_accounts" });
+    document.getElementById("btnConnect").innerHTML = "연결됨";
+
+    //   dash board 보이기
+    document.getElementById("dashBoard").style.display = "block";
+
+  } else {
+    document.getElementById("btnConnect").innerHTML =
+      "MetaMask를 설치해주세요";
+  }
+}
+
+function getTBodyFromGetMyGroup(params) {
   managerContract.methods.getMyGroup().call(async (err, res) => {
     document.getElementById('dashBoardBody').innerHTML = await Promise.all(
       res.map(async (e) => {
@@ -223,27 +253,4 @@ async function load_first() {
       }
     ));
   })
-}
-
-async function manager() {
-  managerContract.methods.createGroup('a', 'b').call();
-}
-
-async function connect() {
-  if (typeof window.ethereum !== "undefined") {
-    try {
-      await ethereum.request({ method: "eth_requestAccounts" });
-    } catch (error) {
-      console.log(error);
-    }
-    const accounts = await ethereum.request({ method: "eth_accounts" });
-    document.getElementById("btnConnect").innerHTML = "연결됨";
-
-    //   dash board 보이기
-    document.getElementById("dashBoard").style.display = "block";
-
-  } else {
-    document.getElementById("btnConnect").innerHTML =
-      "MetaMask를 설치해주세요";
-  }
 }
