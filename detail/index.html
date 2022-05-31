@@ -5,7 +5,16 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <title>그룹 디테일 | 탈중앙화 계모임</title>
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap');
+
+      .wrap {
+        width: 100%;
+        height: 1000px;
+        background: linear-gradient(to bottom right, #F3F781,80%, #64FE2E);
+      }
+  
       table {
+        font-family: 'Hahmlet', serif;
         border-collapse: collapse;
         text-align: center;
         line-height: 1.5;
@@ -34,6 +43,7 @@
         background: #ccd2ff;
       }
       #btnDetail {
+        font-family: 'Hahmlet', serif;
         margin: auto;
         width: 160px;
         height: 50px;
@@ -47,12 +57,14 @@
       }
 
       #btnDetail:hover {
+        font-family: 'Hahmlet', serif;
         transform: scale(1.05);
       }
   
     </style>
   </head>
   <body>
+    <div class="wrap">
     <script src="index.js"></script>
 
     <div id="contents">
@@ -105,4 +117,5 @@
         <h2>4. 계 비용 지불하기</h2>
         <button id="btnDetail" onclick="location.href='../pay/pay.html'">비용 지불하러 가기</div>
       </div>
+    </div>
   </body>
