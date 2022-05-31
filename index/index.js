@@ -43,26 +43,27 @@ async function connect() {
 }
 
 function getTBodyFromGetMyGroup(params) {
-  managerContract.methods.getMyGroup().call(async (err, res) => {
-    document.getElementById('dashBoardBody').innerHTML = await Promise.all(
-      res.map(async (e) => {
-        if (e == 0) {
-          return;
-        }
-        else {
-          // var groupContract = new web3.eth.Contract(groupABI, e);
-          // console.log(groupContract);
+    managerContract.methods.getMyGroup().call(async (err, res) => {
+      var innerHtml = await Promise.all(
+            res.map(async (e) => {
+                    if (e == 0) {
+                        return;
+                    } else {
+                        var balance = await web3.eth.getBalance(e);
+                        let group = new web3.eth.Contract(groupABI, e);
+                        let details = await group.methods.getDetails().call();
 
-          var balance = await web3.eth.getBalance(e);
+                        return "<tr>" +
+                            "<th scope=\"row\">" + details.name + "</th>" +   // 이름
+                            "<td>" + details.desc + "</td>" +
+                            "<td>Ipsum</td>" +                 // 기간
+                            "<td>" + balance + "</td>" +                 // 금액
+                            "<td><div id=\"btnDetail\" onclick=\"location.href='/detail?g=" + e + "'\" style=\"cursor: pointer;\">그룹 세부정보</div></td>" +
+                            "</tr>";
+                    }
+                }
+            ));
 
-          return "<tr>" +
-            "<th scope=\"row\">" + e + "</th>" +   // 이름
-            "<td>Ipsum</td>" +                 // 기간
-            "<td>" + balance + "</td>" +                 // 금액
-            "<td><div id=\"btnDetail\" onclick=\"location.href='../detail/index.html'\" style=\"cursor: pointer;\">그룹 세부정보</div></td>" +
-            "</tr>";
-        }
-      }
-      ));
-  })
+          document.getElementById('dashBoardBody').innerHTML = innerHtml.join('')
+    })
 }
