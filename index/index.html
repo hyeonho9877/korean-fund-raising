@@ -95,7 +95,12 @@
       line-height: 35px;
     }
 
+    #myAddress{
+      margin: 30px;
+    }
+
     table {
+      margin: 50px;
       font-family: 'Hahmlet', serif;
       border-collapse: collapse;
       background: #e5e5e5;
@@ -144,7 +149,8 @@
   <div id="btnConnect" onclick="connect();" style="cursor:pointer;">여기를 눌러 메타마스크를 연결</div>
   <!-- <button id="executeButton" onclick="execute()">Execute</button> -->
   <div id="dashBoard" style="display: none">
-    <h3 id="myAddress">내 주소: </h3>
+    <h3>내 주소 </h3><div id="myAddress"></div>
+    <br>
     <h3>내가 속한 그룹 목록</h3>
     <table>
       <thead>
@@ -190,6 +196,7 @@
       </tbody>
     </table>
     <form class="container" id="formCreateGroup">
+      <h3>새로운 계모임 만들기</h3>
       <label for="title">
         그룹 이름
         <input type="text" id="title" name="title" placeholder="그룹 이름을 입력해주세요" required>
@@ -198,7 +205,7 @@
         그룹 설명
         <input type="text" id="description" name="description" placeholder="그룹 설명을 입력해주세요" required>
       </label>    
-      <div id="btnCreateGroup" onclick="createGroup();" style="cursor:pointer;">새로운 그룹 만들기</div>
+      <div id="btnCreateGroup" onclick="createGroup();" style="cursor:pointer;">만들기</div>
     </form>
     <br><br><br><br>
   </div>
