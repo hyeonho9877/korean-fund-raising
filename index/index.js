@@ -12,7 +12,7 @@ async function load_first() {
   web3.eth.net.isListening()
     .then(() => console.log('Ganache Connected'))
     .catch((e) => {
-      web3 = new Web3("wss://mainnet.infura.io/ws/v3/e3fbfedc03444eb6b1491a84cf06eb02");
+      web3 = new Web3("wss://ropsten.infura.io/ws/v3/e3fbfedc03444eb6b1491a84cf06eb02");
       web3.eth.net.isListening().then(() => console.log('Infura Connected'))
                                 .catch((e) => console.error(e));
     });
