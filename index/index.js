@@ -38,6 +38,7 @@ async function connect() {
 
     //   dash board 보이기
     document.getElementById("dashBoard").style.display = "block";
+    document.getElementById("myAddress").innerHTML=addresses;
 
   } else {
     document.getElementById("btnConnect").innerHTML =
