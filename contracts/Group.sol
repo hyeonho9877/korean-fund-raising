@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AFL-3.0
 pragma solidity ^0.8.0;
+
 import "./GroupManager.sol";
 
 contract Group {
@@ -25,8 +26,7 @@ contract Group {
     GroupManager private manager;
 
     event transferAdmit(uint amount, address to); // 요청에 의한 출금이 완료되었음
-    event outOfLimit(); // 잔고나 인원수 제한에 도달하였음
-    event notMember(uint32 groupID, address from); // groupID에 해당하는 그룹에 멤버가 아님
+    event outOfLimit(); // 인원수 제한에 도달하였음
     event alreadyJoined(address groupAddress, address from); // 이미 해당 그룹에 가입되어 있음
 
     constructor(address payable owner, string memory name, string memory desc, address _GroupManager) {
@@ -50,7 +50,7 @@ contract Group {
     // 그룹에 대한 출금 요청 메소드
     function requestWithdraw(uint amount) public {
         require(!isRaising);
-        require(isAlreadyJoined());
+        require(findMemberSeat(msg.sender) != 10);
         require(amount <= currentBalance);
         requester = payable(msg.sender);
         requestAmount = amount;
@@ -61,7 +61,7 @@ contract Group {
     function agree() public {
         require(msg.sender != requester);
         require(requester != address(0));
-        require(isAlreadyJoined());
+        require(findMemberSeat(msg.sender) != 10);
         agreement += 1;
         if (agreement >= halfOfMember()) {
             address payable targetAddress = requester;
@@ -89,11 +89,15 @@ contract Group {
     // 현재 멤버의 절반에 해당하는 인원수를 계산하는 메소드
     function halfOfMember() private view returns (uint8 half) {
         require(members[0] != address(0));
-        uint8 i;
-        for (i = 0; i < 10; i++) {
-            if (members[i] == address(0)) break;
+        uint8 count;
+        for (uint8 i = 0; i < 10; i++) {
+            if (members[i] != address(0)) count++;
         }
-        half = i / 2;
+        half = count / 2;
+    }
+
+    function getMembers() public returns(address[10] memory){
+        return members;
     }
 
     // 그룹의 상태를 확인하는 메소드
@@ -110,17 +114,17 @@ contract Group {
 
     // 그룹에 가입하는 메소드
     function joinGroup() external returns (bool result){
-        if (isAlreadyJoined()) {
+        if (findMemberSeat(msg.sender) != 10) {
             emit alreadyJoined(address(this), msg.sender);
             return false;
         }
-        uint seat = findSeat();
+        uint seat = findRemainingSeat();
         if (seat == 10) {
             emit outOfLimit();
             return false;
         }
         uint8 remainingSeat = manager.getMyGroupCount(msg.sender);
-        if(remainingSeat==10){
+        if (remainingSeat == 10) {
             emit outOfLimit();
             return false;
         }
@@ -130,25 +134,10 @@ contract Group {
     }
 
     // 이미 그룹에 가입된 계정인지 확인하는 메소드
-    function isAlreadyJoined() private view returns (bool){
-        bool result = false;
+    function findMemberSeat(address target) private view returns (uint8){
         uint8 i;
         for (i = 0; i < 10; i++) {
-            if (members[i] == address(0)) break;
-            else if (members[i] == msg.sender) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
-    // 이미 그룹에 가입된 계정인지 확인하는 메소드
-    function isAlreadyJoined(address target) private view returns (uint8){
-        uint8 i;
-        for (i = 0; i < 10; i++) {
-            if (members[i] == address(0)) return 10;
-            else if (members[i] == target) {
+            if (members[i] == target) {
                 break;
             }
         }
@@ -156,7 +145,7 @@ contract Group {
     }
 
     // 현재 그룹의 여유 자리를 계산하는 메소드
-    function findSeat() private view returns (uint){
+    function findRemainingSeat() private view returns (uint){
         uint i;
         for (i = 0; i < 10; i++) {
             if (members[i] == address(0)) break;
@@ -165,21 +154,18 @@ contract Group {
     }
 
     // 멤버 추방 메소드
-    function kick(address badUser) external {
+    function kick(address badUser) public {
         require(msg.sender == creator);
-        uint8 seat = isAlreadyJoined(badUser);
-        require(seat!=10);
+        uint8 seat = findMemberSeat(badUser);
+        require(seat != 10);
         members[seat] = address(0);
-        reorderMembers(seat);
+        manager.revertGroup(badUser, address(this));
     }
 
-    function reorderMembers(uint8 index) private {
-        for(uint8 i=index+1;i<10;i++){
-            if(members[i]==address(0)) {
-                members[i-1] = address(0);
-                break;
-            }
-            members[i-1] = members[i];
-        }
+    // 그룹 삭제 메소드
+    function destroy() external {
+        require(tx.origin == creator);
+        require(currentBalance == 0);
+        selfdestruct(creator);
     }
 }
