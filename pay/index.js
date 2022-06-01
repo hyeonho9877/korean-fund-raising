@@ -11,30 +11,21 @@ async function load_first() {
 
   managerContract = new web3.eth.Contract(contractABI, contractAddress);
   addresses = await web3.eth.getAccounts();
-  getaccountsGroups();
+  getSelectGroups();
 }
 
-// I wonder it works
-// async function getaccountsGroups() { 
-//   let paygroup = await managerContract.methods.getMyGroup().call();
-//   console.log(paygroup);
+// 현재 계정의 속한 그룹들 select문 목록으로 만들어 띄우기
+// 작동 되는지 모르겠음
+async function getSelectGroups(){
+  let myGroups = await managerContract.methods.getMyGroup().call();
+  console.log(paygroups);
 
-//   var count = 0;
-//   var innerHtml = await Promise.all(
-//     paygroup.map(async (e) => {
-//       if (e == 0) {
-//         return;
-//       } else {
-//         count++;
-//         return '<option value=count>'+
-//                 + e +
-//                '</option>';
-//       }
-//     }
-//   ));
-
-//   document.getElementById('accounts').innerHTML = innerHtml.join('');
-// }
+  var count = 0;
+  for(let group of myGroups){
+    count++;
+    document.getElementById('accounts').innerHTML = '<option value=count>'+ group + '</option>'
+  }
+}
 
 // get
 let select = document.getElementsByClassName("accounts")[0];
