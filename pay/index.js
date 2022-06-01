@@ -27,6 +27,38 @@ async function getSelectGroups(){
   }
 }
 
+// 사용자의 group을 하나씩 받아와서 select문의 option으로 생성
+function getMyGroups() {
+  managerContract.methods.getMyGroup().call(async (err, res) => {
+    var innerHtml = await Promise.all(
+          res.map(async (e) => {
+                  if (e == 0) {
+                      return;
+                  } else {
+                      var balance = await web3.eth.getBalance(e);
+                      let group = new web3.eth.Contract(groupABI, e);
+                      // let details = await group.methods.getDetails().call();
+                      return '<option value=e onchange="changeGroup()">'+ e + '</option>'
+                  }
+              }
+          ));
+        document.getElementById("toAddr").innerHTML = innerHtml.join('')
+  })
+}
+
+//option의 선택지를 선택하면 해당 그룹의 balance값으로 바뀌도록 설정
+function changeGroup(){
+  var selectBox = document.getElementById("toAddr");
+  var groupAddr = selectBox.options[selectBox.selectedIndex].value;
+
+  var balance = await web3.eth.getBalance(groupAddr);
+  document.getElementById("groupBalance").innerHTML = "<div>"+"Balance of this group is"+balance+"</div>"
+}
+
+
+
+
+
 // get
 let select = document.getElementsByClassName("accounts")[0];
 select.addEventListener("change", showBalance);
