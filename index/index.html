@@ -117,9 +117,6 @@
       margin:0px;
     }  
 
-    #formCreateGroup {
-      visibility: hidden;
-    }
 
 
 
@@ -177,19 +174,19 @@
               <th scope="row">그룹 5</th><td>Ipsum</td><td>3500</td>
               <td><div id="btnDetail" onclick="location.href='../detail/index.html'" style="cursor: pointer;">그룹 세부정보</div></td>
             </tr> -->
-        </tbody>
-      </table>
-      
-      <div>
-        <input id='title'/>
-        <input id='description'/>
-      </div>
-
+      </tbody>
+    </table>
+    <form class="container" id="formCreateGroup">
+      <label for="title">
+        그룹 이름
+        <input type="text" id="title" name="title" placeholder="그룹 이름을 입력해주세요" required>
+      </label>
+      <label for="lastname">
+        그룹 설명
+        <input type="text" id="description" name="description" placeholder="그룹 설명을 입력해주세요" required>
+      </label>    
       <div id="btnCreateGroup" onclick="createGroup();" style="cursor:pointer;">새로운 그룹 만들기</div>
-
-
-    </div>
-
+    </form>
   </div>
 </body>
 
