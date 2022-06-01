@@ -14,6 +14,8 @@ async function load_first() {
   getSelectGroups();
 }
 
+// 현재 계정의 속한 그룹들 select문 목록으로 만들어 띄우기
+// 작동 되는지 모르겠음
 async function getSelectGroups(){
   let myGroups = await managerContract.methods.getMyGroup().call();
   console.log(paygroups);
