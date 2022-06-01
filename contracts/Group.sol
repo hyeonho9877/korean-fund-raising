@@ -96,7 +96,8 @@ contract Group {
         half = count / 2;
     }
 
-    function getMembers() public returns(address[10] memory){
+    // 그룹의 멤버 목록 반환
+    function getMembers() public view returns(address[10] memory){
         return members;
     }
 
