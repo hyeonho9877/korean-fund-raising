@@ -1,17 +1,21 @@
-const contractAddress = "0x39A1C58d238ec465f56fB81AD1f1cfd27F6c000F";
+const contractAddress = "0x425180500861c9f117d493aFD237488aEaa65fca";
 const contractABI = [{ "anonymous": false, "inputs": [{ "indexed": false, "internalType": "address", "name": "contractAddress", "type": "address" }, { "indexed": false, "internalType": "address", "name": "projectStarter", "type": "address" }, { "indexed": false, "internalType": "string", "name": "projectTitle", "type": "string" }, { "indexed": false, "internalType": "string", "name": "projectDesc", "type": "string" }], "name": "groupCreated", "type": "event" }, { "inputs": [{ "internalType": "string", "name": "title", "type": "string" }, { "internalType": "string", "name": "description", "type": "string" }], "name": "createGroup", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "getMyGroup", "outputs": [{ "internalType": "address[10]", "name": "", "type": "address[10]" }], "stateMutability": "view", "type": "function", "constant": true }, { "inputs": [{ "internalType": "address", "name": "target", "type": "address" }], "name": "getMyGroupCount", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function", "constant": true }, { "inputs": [{ "internalType": "address", "name": "target", "type": "address" }, { "internalType": "address", "name": "groupAddress", "type": "address" }, { "internalType": "uint8", "name": "seat", "type": "uint8" }], "name": "updateMyGroup", "outputs": [], "stateMutability": "nonpayable", "type": "function" }];
 const groupABI = [{"inputs": [{"internalType": "address payable","name": "owner","type": "address"},{"internalType": "string","name": "name","type": "string"},{"internalType": "string","name": "desc","type": "string"},{"internalType": "address","name": "_GroupManager","type": "address"}],"stateMutability": "nonpayable","type": "constructor"},{"anonymous": false,"inputs": [{"indexed": false,"internalType": "address","name": "groupAddress","type": "address"},{"indexed": false,"internalType": "address","name": "from","type": "address"}],"name": "alreadyJoined","type": "event"},{"anonymous": false,"inputs": [{"indexed": false,"internalType": "uint32","name": "groupID","type": "uint32"},{"indexed": false,"internalType": "address","name": "from","type": "address"}],"name": "notMember","type": "event"},{"anonymous": false,"inputs": [],"name": "outOfLimit","type": "event"},{"anonymous": false,"inputs": [{"indexed": false,"internalType": "uint256","name": "amount","type": "uint256"},{"indexed": false,"internalType": "address","name": "to","type": "address"}],"name": "transferAdmit","type": "event"},{"inputs": [],"name": "deposit","outputs": [],"stateMutability": "payable","type": "function"},{"inputs": [{"internalType": "uint256","name": "amount","type": "uint256"}],"name": "requestWithdraw","outputs": [],"stateMutability": "nonpayable","type": "function"},{"inputs": [],"name": "agree","outputs": [],"stateMutability": "nonpayable","type": "function"},{"inputs": [],"name": "cancelRequest","outputs": [],"stateMutability": "nonpayable","type": "function"},{"inputs": [],"name": "getDetails","outputs": [{"internalType": "address payable","name": "owner","type": "address"},{"internalType": "string","name": "name","type": "string"},{"internalType": "string","name": "desc","type": "string"},{"internalType": "uint256","name": "balance","type": "uint256"},{"internalType": "address[10]","name": "membersResponse","type": "address[10]"},{"internalType": "address","name": "currentRequester","type": "address"},{"internalType": "bool","name": "isCurrentRaising","type": "bool"},{"internalType": "uint256","name": "currentRequestAmount","type": "uint256"}],"stateMutability": "view","type": "function"},{"inputs": [],"name": "joinGroup","outputs": [{"internalType": "bool","name": "result","type": "bool"}],"stateMutability": "nonpayable","type": "function"}];
 var web3;
 var managerContract;
-var addresses;
+var address;
 
 window.onload = load_first;
 async function load_first() {
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
-
-  managerContract = new web3.eth.Contract(contractABI, contractAddress);
-  addresses = await web3.eth.getAccounts();
-  getTBodyFromGetMyGroup();
+  
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")) 
+  web3.eth.net.isListening()
+    .then(() => console.log('Ganache Connected'))
+    .catch((e) => {
+      web3 = new Web3("wss://ropsten.infura.io/ws/v3/e3fbfedc03444eb6b1491a84cf06eb02");
+      web3.eth.net.isListening().then(() => console.log('Infura Connected'))
+                                .catch((e) => console.error(e));
+    });
 }
 
 async function createGroup() {
@@ -19,7 +23,7 @@ async function createGroup() {
   var groupDescription = document.getElementById('description').value; 
 
   var createGroupGas = await managerContract.methods.createGroup(groupTitle , groupDescription).estimateGas();
-  var tx = await managerContract.methods.createGroup(groupTitle , groupDescription).send({from: addresses[0], gas: createGroupGas});
+  var tx = await managerContract.methods.createGroup(groupTitle , groupDescription).send({from: address[0], gas: createGroupGas});
 
   console.log(tx.transactionHash);
   getTBodyFromGetMyGroup();
@@ -27,8 +31,9 @@ async function createGroup() {
 
 async function connect() {
   if (typeof window.ethereum !== "undefined") {
+    var metamaskAddr;
     try {
-      await ethereum.request({ method: "eth_requestAccounts" });
+      metamaskAddr = await ethereum.request({ method: "eth_requestAccounts" });
     } catch (error) {
       console.log(error);
     }
@@ -38,15 +43,18 @@ async function connect() {
 
     //   dash board 보이기
     document.getElementById("dashBoard").style.display = "block";
-    document.getElementById("myAddress").innerHTML=addresses;
+    document.getElementById("myAddress").innerText = "내 주소: " + metamaskAddr;
 
+    managerContract = new web3.eth.Contract(contractABI, contractAddress);
+    address = await metamaskAddr[0];
+    getTBodyFromGetMyGroup();
   } else {
     document.getElementById("btnConnect").innerHTML =
       "MetaMask를 설치해주세요";
   }
 }
 
-function getTBodyFromGetMyGroup(params) {
+function getTBodyFromGetMyGroup() {
     managerContract.methods.getMyGroup().call(async (err, res) => {
       var innerHtml = await Promise.all(
             res.map(async (e) => {

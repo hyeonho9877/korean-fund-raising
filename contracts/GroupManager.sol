@@ -30,7 +30,7 @@ contract GroupManager {
     }
 
     // 자신이 속해있는 그룹의 개수를 확인하는 메소드
-    function getMyGroupCount(address target) public view returns(uint8){
+    function getMyGroupCount(address target) public view returns (uint8){
         uint8 i;
         for (i = 0; i < 10; i++) {
             if (joinedGroups[target][i] == address(0)) break;
@@ -42,4 +42,38 @@ contract GroupManager {
     function updateMyGroup(address target, address groupAddress, uint8 seat) external {
         joinedGroups[target][seat] = groupAddress;
     }
+
+    // 특정 계정에서 특정 그룹의 매핑 제거
+    function revertGroup(address member, address group) external {
+        require(member != address(0));
+        require(group != address(0));
+        address[10] memory _joinedGroups = joinedGroups[member];
+        for (uint i = 0; i < 10; i++) {
+            if (_joinedGroups[i] == group) {
+                joinedGroups[member][i] = address(0);
+                break;
+            }
+        }
+    }
+
+    // 그룹 삭제
+    function destroyGroup(address groupAddress) external {
+        require(groupAddress != address(0));
+        Group group = Group(groupAddress);
+        address[10] memory members = group.getMembers();
+        for (uint i = 0; i < 10; i++) {
+            if(members[i] != address(0)){
+                address[10] memory _joinedGroups = joinedGroups[members[i]];
+                for (uint j = 0; j < 10; j++) {
+                    if (_joinedGroups[j] == groupAddress) {
+                        joinedGroups[members[i]][j] = address(0);
+                        break;
+                    }
+                }
+            }
+        }
+        group.destroy();
+    }
+
+
 }
