@@ -13,6 +13,20 @@
         height: 1000px;
         background: linear-gradient(to bottom right, #F3F781,80%, #64FE2E);
       }
+
+      button{
+        font-family: 'Hahmlet', serif;
+        margin: auto;
+        width: 100px;
+        height: 35px;
+        border-radius: 15px;
+        border: 0;
+        outline: 0;
+        font-size: 15px;
+        background-color: rgba(255, 78, 78, 0.836);
+        color: #fff;
+        text-align: center;
+      }
   
       table {
         font-family: 'Hahmlet', serif;
@@ -41,6 +55,25 @@
         padding: 10px;
         vertical-align: top;
       }
+
+      #btnReturn{
+        font-family: 'Hahmlet', serif;
+        margin: auto;
+        width: 160px;
+        height: 50px;
+        border-radius: 25px;
+        margin-right: 50px;
+        font-size: 15px;
+        background-color: rgb(171, 171, 171);
+        color: #fff;
+        text-align: center;
+        line-height: 35px;
+      }
+      #btnReturn:hover {
+        font-family: 'Hahmlet', serif;
+        transform: scale(1.05);
+      }
+
       #btnPay {
         font-family: 'Hahmlet', serif;
         margin: auto;
@@ -56,6 +89,25 @@
       }
 
       #btnPay:hover {
+        font-family: 'Hahmlet', serif;
+        transform: scale(1.05);
+      }
+
+      #btnDelete {
+        font-family: 'Hahmlet', serif;
+        margin: auto;
+        width: 160px;
+        height: 50px;
+        border-radius: 25px;
+        font-size: 15px;
+        background-color: rgb(60, 199, 134);
+        color: #fff;
+        text-align: center;
+        line-height: 35px;
+        border-color: rgb(60, 199, 134);
+      }
+
+      #btnDelete:hover{
         font-family: 'Hahmlet', serif;
         transform: scale(1.05);
       }
@@ -113,7 +165,16 @@
 
       <div>
         <h2>4. 계 비용 지불하기</h2>
-        <button id="btnPay" onclick="location.href='../pay/pay.html'">비용 지불하러 가기</button>
+        <button id="btnPay" onclick="location.href='../pay.index.html'">비용 지불하러 가기</button>
+      </div>
+
+      <div>
+        <h2>5. 그룹 삭제하기</h2>
+        <button id="btnDestroy" onclick="destroyGroup();" style="cursor:pointer;">그룹 삭제하기</button>
       </div>
     </div>
   </body>
+  <br><br><br><br><br>
+<footer>
+  <button id="btnReturn" style="margin: auto; display: block;" onclick=history.back(); style="cursor: pointer;">돌아가기</div>
+  </footer>

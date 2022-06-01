@@ -70,7 +70,7 @@ function getTBodyFromGetMyGroup() {
                             "<td>" + details.desc + "</td>" +
                             "<td>Ipsum</td>" +                 // 기간
                             "<td>" + balance + "</td>" +                 // 금액
-                            "<td><div id=\"btnDetail\" onclick=\"location.href='/detail?g=" + e + "'\" style=\"cursor: pointer;\">그룹 세부정보</div></td>" +
+                            "<td><div id=\"btnDetail\" onclick=\"location.href='/detail?g=" + e + "'\" style=\"margin: auto; display: block; cursor: pointer;\">그룹 세부정보</div></td>" +
                             "</tr>";
                     }
                 }
