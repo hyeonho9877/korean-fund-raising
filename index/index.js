@@ -15,8 +15,11 @@ async function load_first() {
 }
 
 async function createGroup() {
-  var createGroupGas = await managerContract.methods.createGroup('a', 'b').estimateGas();
-  var tx = await managerContract.methods.createGroup('a', 'b').send({from: addresses[0], gas: createGroupGas});
+  var groupTitle = document.getElementById('title').value;
+  var groupDescription = document.getElementById('description').value; 
+
+  var createGroupGas = await managerContract.methods.createGroup(groupTitle , groupDescription).estimateGas();
+  var tx = await managerContract.methods.createGroup(groupTitle , groupDescription).send({from: addresses[0], gas: createGroupGas});
 
   console.log(tx.transactionHash);
   getTBodyFromGetMyGroup();
