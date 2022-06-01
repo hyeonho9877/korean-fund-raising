@@ -8,12 +8,14 @@ var address;
 window.onload = load_first;
 async function load_first() {
   
-  web3 = new Web3(Web3.providers.HttpProvider("http://localhost:7545")) 
-      || new Web3("wss://mainnet.infura.io/ws/v3/e3fbfedc03444eb6b1491a84cf06eb02");
-
-  managerContract = new web3.eth.Contract(contractABI, contractAddress);
-  addresses = await web3.eth.getAccounts();
-  getTBodyFromGetMyGroup();
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")) 
+  web3.eth.net.isListening()
+    .then(() => console.log('Ganache Connected'))
+    .catch((e) => {
+      web3 = new Web3("wss://mainnet.infura.io/ws/v3/e3fbfedc03444eb6b1491a84cf06eb02");
+      web3.eth.net.isListening().then(() => console.log('Infura Connected'))
+                                .catch((e) => console.error(e));
+    });
 }
 
 async function createGroup() {
