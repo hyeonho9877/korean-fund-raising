@@ -23,6 +23,18 @@
       text-align: center;
     }
 
+    input {
+      width: 300px;
+      height: 32px;
+      font-size: 15px;
+      font-family: 'Hahmlet', serif;
+      border: 0;
+      border-radius: 10px;
+      outline: none;
+      padding-left: 10px;
+      background-color: rgb(233, 233, 233);
+    }
+
     .wrap {
       width: 100%;
       height: 1000px;
@@ -113,7 +125,8 @@
     
 
     body{
-      margin:0px;
+      margin:30px;
+      background: linear-gradient(to bottom right, #F3F781,80%, #64FE2E);
     }
 
     
@@ -171,13 +184,16 @@
         </tbody>
       </table>
       
-      <div>
-        <input id='title'/>
-        <input id='description'/>
+      <div class="textbox">
+        그룹 이름  <input id='title'/>
+        <br>
+        <br>
+        그룹 설명  <input id='description'/>
+        <div id="btnCreateGroup" onclick="createGroup();" style="cursor:pointer;">새로운 그룹 만들기</div>
       </div>
-
+      <!--
       <div id="btnCreateGroup" onclick="createGroup();" style="cursor:pointer;">새로운 그룹 만들기</div>
-
+-->
 
     </div>
 
