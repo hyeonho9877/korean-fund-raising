@@ -379,16 +379,18 @@ async function getTBodyFromGroupMembers() {
                     try {
                         let date = await getLastTxDate(e);
                         let month = parseInt(date.getMonth()) + 1;
+                        let kick = e===address ? '<td><button id="' + address + '" onclick="kick(this.id)">탈퇴</button></td>' : getKickableHtml(date, e);
                         console.log(date);
                         return '<tr>' +
                             '<td>' + e + '</td>' +
-                            '<td>' + date.getFullYear() + '/' + month + '/' + date.getDate() + '</td>' + getKickableHtml(date, e) +
+                            '<td>' + date.getFullYear() + '/' + month + '/' + date.getDate() + '</td>' +
+                            kick+
                             '</tr>';
                     } catch (err) {
                         return '<tr>' +
                             '<td>' + e + '</td>' +
                             '<td>' + '*' + '</td>' +
-                            '<td><button id="' + address + '" onclick="kick(this.id)">추방</button></td>' +
+                            '<td><button id="' + e + '" onclick="kick(this.id)">추방</button></td>' +
                             '</tr>';
                     }
                 }
