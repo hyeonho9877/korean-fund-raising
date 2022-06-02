@@ -402,6 +402,7 @@ async function getTBodyFromGetMyGroup() {
     for (const groupAddress of myGroup) {
         if(groupAddress !== "0x0000000000000000000000000000000000000000") {
             let balance = await web3.eth.getBalance(groupAddress);
+            balance = (parseInt(balance) / 10 ** 18) + ' ETH';
             let group = new web3.eth.Contract(groupABI, groupAddress);
             let details = await group.methods.getDetails().call({from:address});
 
