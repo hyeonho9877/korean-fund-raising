@@ -27,52 +27,84 @@ async function getSelectGroups(){
   }
 }
 
+// 사용자의 group을 하나씩 받아와서 select문의 option으로 생성
+function getMyGroups() {
+  managerContract.methods.getMyGroup().call(async (err, res) => {
+    var innerHtml = await Promise.all(
+          res.map(async (e) => {
+                  if (e == 0) {
+                      return;
+                  } else {
+                      var balance = await web3.eth.getBalance(e);
+                      let group = new web3.eth.Contract(groupABI, e);
+                      // let details = await group.methods.getDetails().call();
+                      return '<option value=e onchange="changeGroup()">'+ e + '</option>'
+                  }
+              }
+          ));
+        document.getElementById("toAddr").innerHTML = innerHtml.join('')
+  })
+}
+
+//option의 선택지를 선택하면 해당 그룹의 balance값으로 바뀌도록 설정
+function changeGroup(){
+  var selectBox = document.getElementById("toAddr");
+  var groupAddr = selectBox.options[selectBox.selectedIndex].value;
+
+  var balance = await web3.eth.getBalance(groupAddr);
+  document.getElementById("groupBalance").innerHTML = "<div>"+"Balance of this group is"+balance+"</div>"
+}
+
+
+
+
+
 // get
 let select = document.getElementsByClassName("accounts")[0];
 select.addEventListener("change", showBalance);
 let log = document.getElementById("log");
 log.innerHTML = "";
 
-// 선택된 계정의 balance 표시
-async function showBalance() {
-  let selectTags = document.getElementsByClassName("accounts");
-  let balanceTag = document.getElementById("balance");
-  console.log("show balance");
+// // 선택된 계정의 balance 표시
+// async function showBalance() {
+//   let selectTags = document.getElementsByClassName("accounts");
+//   let balanceTag = document.getElementById("balance");
+//   console.log("show balance");
 
-  let address = selectTags[0].options[selectTags[0].selectedIndex].value;
-  console.log(address);
-  let balance = await web3.eth.getBalance(address);
-  console.log(balance);
-  balanceTag.innerHTML = web3.utils.fromWei(balance, "ether");
-}
+//   let address = selectTags[0].options[selectTags[0].selectedIndex].value;
+//   console.log(address);
+//   let balance = await web3.eth.getBalance(address);
+//   console.log(balance);
+//   balanceTag.innerHTML = web3.utils.fromWei(balance, "ether");
+// }
 
 // sendBtn을 클릭하면 이더 전송
 let sendBtn = document.getElementById("sendBtn");
 sendBtn.addEventListener("click", () => {
   // 데이터 가져오기
-  let fromAddr = document.getElementById("fromAddr");
+  let fromAddr = addresses[0];
   fromAddr = fromAddr.options[fromAddr.selectedIndex].value;
-  let toAddr = document.getElementById("toAddr");
+  let toAddr = contractAddress;
   toAddr = toAddr.options[toAddr.selectedIndex].value;
+  
   let value = document.getElementById("value").value;
   value = web3.utils.toWei(value, "ether");
-  let password = document.getElementById("password").value;
 
   // 계정 언락
-  web3.eth.personal.unlockAccount(fromAddr, password).then(async (unlocked) => {
-    if (unlocked) {
-      outputLog(log, `unlocked ? ${unlocked}, sending Transaction...`);
-      // sned a transaction
-      let receipt = await web3.eth.sendTransaction({
-        from: fromAddr,
-        to: toAddr,
-        value: value,
-      });
-      outputLog(log, "Transaction Successfully sended");
-      outputLog(log, "Transaction Receipt: ");
-      outputLog(log, JSON.stringify(receipt, undefined, 2));
-    }
-  });
+  // web3.eth.personal.unlockAccount(fromAddr, password).then(async (unlocked) => {
+  //   if (unlocked) {
+  //     outputLog(log, `unlocked ? ${unlocked}, sending Transaction...`);
+  //     // sned a transaction
+  //     let receipt = await web3.eth.sendTransaction({
+  //       from: fromAddr,
+  //       to: toAddr,
+  //       value: value,
+  //     });
+  //     outputLog(log, "Transaction Successfully sended");
+  //     outputLog(log, "Transaction Receipt: ");
+  //     outputLog(log, JSON.stringify(receipt, undefined, 2));
+  //   }
+  // });
 });
 
 function outputLog(log, result) {
