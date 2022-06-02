@@ -327,7 +327,6 @@ async function getTBodyFromGetMyGroup() {
             let tr =  "<tr>" +
                 "<th scope=\"row\">" + details.name + "</th>" +   // 이름
                 "<td>" + details.desc + "</td>" +
-                "<td>Ipsum</td>" +                 // 기간
                 "<td>" + balance + "</td>" +                 // 금액
                 "<td><div id=\"btnDetail\" onclick=\"location.href='/detail?g=" + groupAddress + "'\" style=\"cursor: pointer;\">그룹 세부정보</div></td>" +
                 "</tr>";
