@@ -424,7 +424,14 @@ async function getTBodyFromGroupMembers() {
         document.getElementById('requester').innerHTML = details.currentRequester;
         document.getElementById('request-amount').innerHTML = (parseInt(details.currentRequestAmount) / 10 ** 18) + ' ETH';
         document.getElementById('agree-statement').innerHTML = '동의 인수 : ' + details.agreed;
-        if (!isAlreadyAgreed(details.agreedMembersList)) document.getElementById('agree-statement').innerHTML += '\t\t<button id="btn-agree" onclick="agree()">동의</button>';
+        if (!isAlreadyAgreed(details.agreedMembersList)) {
+            if (details.currentRequester.toUpperCase() === address.toUpperCase()) {
+                document.getElementById('agree-statement').innerHTML += '\t\t<button id="btn-cancel" onclick="cancelRequest()">취소</button>';
+            } else {
+                document.getElementById('agree-statement').innerHTML += '\t\t<button id="btn-agree" onclick="agree()">동의</button>';
+            }
+
+        }
         document.querySelector('#btnRequestWithdraw').disabled = true;
     }
 }
@@ -525,6 +532,13 @@ async function agree() {
 async function secession(user) {
     if (confirm('탈퇴 하시겠습니까?')) {
         await groupContract.methods.secession().send({from: address});
+        return getTBodyFromGroupMembers();
+    }
+}
+
+async function cancelRequest() {
+    if (confirm('취소 하시겠습니까?')) {
+        await groupContract.methods.cancelRequest().send({from: address});
         return getTBodyFromGroupMembers();
     }
 }
