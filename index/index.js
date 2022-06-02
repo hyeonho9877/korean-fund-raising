@@ -1,4 +1,4 @@
-const contractAddress = "0x942D98b6E82f2aAe61477159dCB7CfB6B4f1F3b7";
+const contractAddress = "0xFD9236af22039B269d51E6473a4eadeE3444bbB5";
 const contractABI = [{
     "anonymous": false,
     "inputs": [{
@@ -57,97 +57,211 @@ const contractABI = [{
     "stateMutability": "nonpayable",
     "type": "function"
 }];
-const groupABI = [{
-    "inputs": [{
-        "internalType": "address payable",
-        "name": "owner",
-        "type": "address"
-    }, {"internalType": "string", "name": "name", "type": "string"}, {
-        "internalType": "string",
-        "name": "desc",
-        "type": "string"
-    }, {"internalType": "address", "name": "_GroupManager", "type": "address"}],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-}, {
-    "anonymous": false,
-    "inputs": [{
-        "indexed": false,
-        "internalType": "address",
-        "name": "groupAddress",
-        "type": "address"
-    }, {"indexed": false, "internalType": "address", "name": "from", "type": "address"}],
-    "name": "alreadyJoined",
-    "type": "event"
-}, {"anonymous": false, "inputs": [], "name": "outOfLimit", "type": "event"}, {
-    "anonymous": false,
-    "inputs": [{"indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256"}, {
-        "indexed": false,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-    }],
-    "name": "transferAdmit",
-    "type": "event"
-}, {
-    "inputs": [],
-    "name": "deposit",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-}, {
-    "inputs": [{"internalType": "uint256", "name": "amount", "type": "uint256"}],
-    "name": "requestWithdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-}, {"inputs": [], "name": "agree", "outputs": [], "stateMutability": "nonpayable", "type": "function"}, {
-    "inputs": [],
-    "name": "cancelRequest",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-}, {
-    "inputs": [],
-    "name": "getMembers",
-    "outputs": [{"internalType": "address[10]", "name": "", "type": "address[10]"}],
-    "stateMutability": "view",
-    "type": "function"
-}, {
-    "inputs": [],
-    "name": "getDetails",
-    "outputs": [{"internalType": "address payable", "name": "owner", "type": "address"}, {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-    }, {"internalType": "string", "name": "desc", "type": "string"}, {
-        "internalType": "uint256",
-        "name": "balance",
-        "type": "uint256"
-    }, {"internalType": "address[10]", "name": "membersResponse", "type": "address[10]"}, {
-        "internalType": "address",
-        "name": "currentRequester",
-        "type": "address"
-    }, {"internalType": "bool", "name": "isCurrentRaising", "type": "bool"}, {
-        "internalType": "uint256",
-        "name": "currentRequestAmount",
-        "type": "uint256"
-    }],
-    "stateMutability": "view",
-    "type": "function"
-}, {
-    "inputs": [],
-    "name": "joinGroup",
-    "outputs": [{"internalType": "bool", "name": "result", "type": "bool"}],
-    "stateMutability": "nonpayable",
-    "type": "function"
-}, {
-    "inputs": [{"internalType": "address", "name": "badUser", "type": "address"}],
-    "name": "kick",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-}, {"inputs": [], "name": "destroy", "outputs": [], "stateMutability": "nonpayable", "type": "function"}];
+const groupABI = [
+    {
+        "inputs": [
+            {
+                "internalType": "address payable",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "desc",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "_GroupManager",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "groupAddress",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            }
+        ],
+        "name": "alreadyJoined",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [],
+        "name": "outOfLimit",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            }
+        ],
+        "name": "transferAdmit",
+        "type": "event"
+    },
+    {
+        "inputs": [],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "requestWithdraw",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "agree",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "cancelRequest",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getMembers",
+        "outputs": [
+            {
+                "internalType": "address[10]",
+                "name": "",
+                "type": "address[10]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getDetails",
+        "outputs": [
+            {
+                "internalType": "address payable",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "desc",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "balance",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address[10]",
+                "name": "membersResponse",
+                "type": "address[10]"
+            },
+            {
+                "internalType": "address",
+                "name": "currentRequester",
+                "type": "address"
+            },
+            {
+                "internalType": "bool",
+                "name": "isCurrentRaising",
+                "type": "bool"
+            },
+            {
+                "internalType": "uint256",
+                "name": "currentRequestAmount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint8",
+                "name": "agreed",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "joinGroup",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "result",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "badUser",
+                "type": "address"
+            }
+        ],
+        "name": "kick",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "destroy",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+];
 var web3;
 var managerContract;
 var address;
