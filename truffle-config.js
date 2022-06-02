@@ -21,7 +21,7 @@
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
 // const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+// const mnemonic = "";
 
 module.exports = {
   /**
@@ -41,10 +41,16 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
+    ropsten: {
+      provider: function () {
+        return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/c21f1f6f61d54cdb9466819c07665f64");
+      },
+      network_id: 3 // Ganache (default: none)
+    },
     ganache: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 7545,            // Standard Ethereum port (default: none)
-     network_id: "5777"      // Ganache (default: none)
+      host:'localhost',
+      port:13883,
+      network_id: 5777 // Ganache (default: none)
     }
     // Another network with more advanced options...
     // advanced: {
@@ -81,7 +87,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.13"      // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.13" // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -104,13 +110,13 @@ module.exports = {
   // $ truffle migrate --reset --compile-all
   //
   // db: {
-    // enabled: false,
-    // host: "127.0.0.1",
-    // adapter: {
-    //   name: "sqlite",
-    //   settings: {
-    //     directory: ".db"
-    //   }
-    // }
+  // enabled: false,
+  // host: "127.0.0.1",
+  // adapter: {
+  //   name: "sqlite",
+  //   settings: {
+  //     directory: ".db"
+  //   }
+  // }
   // }
 };
