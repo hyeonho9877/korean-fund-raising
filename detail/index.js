@@ -1,4 +1,4 @@
-const managerAddress = "0xFD9236af22039B269d51E6473a4eadeE3444bbB5";
+const managerAddress = "0x92EB1398560E4A5BA7B0d92fB8618A4b7e4f443F";
 const contractABI = [
     {
         "anonymous": false,
@@ -304,6 +304,11 @@ const groupABI = [
                 "internalType": "uint8",
                 "name": "agreed",
                 "type": "uint8"
+            },
+            {
+                "internalType": "address[10]",
+                "name": "agreedMembersList",
+                "type": "address[10]"
             }
         ],
         "stateMutability": "view",
@@ -341,8 +346,15 @@ const groupABI = [
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "secession",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
     }
-]
+];
 let managerContract;
 let creator;
 let groupAddr;
@@ -378,19 +390,24 @@ async function getTBodyFromGroupMembers() {
                     memberCount += 1;
                     try {
                         let date = await getLastTxDate(e);
-                        let month = parseInt(date.getMonth()) + 1;
-                        let kick = e===address ? '<td><button id="' + address + '" onclick="kick(this.id)">탈퇴</button></td>' : getKickableHtml(date, e);
                         console.log(date);
+                        let month = parseInt(date.getMonth()) + 1;
+                        console.log(e.toUpperCase());
+                        console.log(address.toUpperCase());
+                        let kick = e.toUpperCase() === address.toUpperCase() ? '<td><button id="' + address + '" onclick="secession(this.id)">탈퇴</button></td>' : getKickableHtml(date, e);
+                        console.log(kick)
                         return '<tr>' +
                             '<td>' + e + '</td>' +
                             '<td>' + date.getFullYear() + '/' + month + '/' + date.getDate() + '</td>' +
-                            kick+
+                            kick +
                             '</tr>';
                     } catch (err) {
+                        console.log(err);
+                        let kick = e.toUpperCase() === address.toUpperCase() ? '<td><button id="' + address + '" onclick="secession(this.id)">탈퇴</button></td>' : '<td><button id="' + e + '" onclick="kick(this.id)">추방</button></td>';
                         return '<tr>' +
                             '<td>' + e + '</td>' +
                             '<td>' + '*' + '</td>' +
-                            '<td><button id="' + e + '" onclick="kick(this.id)">추방</button></td>' +
+                            kick +
                             '</tr>';
                     }
                 }
@@ -407,14 +424,14 @@ async function getTBodyFromGroupMembers() {
         document.getElementById('requester').innerHTML = details.currentRequester;
         document.getElementById('request-amount').innerHTML = (parseInt(details.currentRequestAmount) / 10 ** 18) + ' ETH';
         document.getElementById('agree-statement').innerHTML = '동의 인수 : ' + details.agreed;
-        if(!isAlreadyAgreed(details.agreedMembersList)) document.getElementById('agree-statement').innerHTML += '\t\t<button id="btn-agree" onclick="agree()">동의</button>';
+        if (!isAlreadyAgreed(details.agreedMembersList)) document.getElementById('agree-statement').innerHTML += '\t\t<button id="btn-agree" onclick="agree()">동의</button>';
         document.querySelector('#btnRequestWithdraw').disabled = true;
     }
 }
 
 function isAlreadyAgreed(agreedList) {
-    for(const addr in agreedList) {
-        if(addr.toUpperCase() === address.toUpperCase()) return true;
+    for (const addr in agreedList) {
+        if (addr.toUpperCase() === address.toUpperCase()) return true;
     }
     return false;
 }
@@ -426,6 +443,7 @@ async function getLastTxDate(address) {
             return response.json();
         })
         .then(jsonResponse => {
+            console.log(jsonResponse)
             for (const tx in jsonResponse.result) {
                 let txInfo = jsonResponse.result[tx];
                 if (txInfo.to.toUpperCase() === groupAddr.toUpperCase() && parseInt(txInfo.value) > 0) {
@@ -502,4 +520,11 @@ async function requestWithdraw() {
 async function agree() {
     await groupContract.methods.agree().send({from: address});
     document.querySelector('#btn-agree').disable = true;
+}
+
+async function secession(user) {
+    if (confirm('탈퇴 하시겠습니까?')) {
+        await groupContract.methods.secession().send({from: address});
+        return getTBodyFromGroupMembers();
+    }
 }

@@ -1,4 +1,4 @@
-const contractAddress = "0xFD9236af22039B269d51E6473a4eadeE3444bbB5";
+const contractAddress = "0x92EB1398560E4A5BA7B0d92fB8618A4b7e4f443F";
 const contractABI = [
     {
         "anonymous": false,
@@ -304,6 +304,11 @@ const groupABI = [
                 "internalType": "uint8",
                 "name": "agreed",
                 "type": "uint8"
+            },
+            {
+                "internalType": "address[10]",
+                "name": "agreedMembersList",
+                "type": "address[10]"
             }
         ],
         "stateMutability": "view",
@@ -338,6 +343,13 @@ const groupABI = [
     {
         "inputs": [],
         "name": "destroy",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "secession",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

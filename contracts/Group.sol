@@ -188,4 +188,11 @@ contract Group {
         require(currentBalance == 0);
         selfdestruct(creator);
     }
+
+    function secession() public {
+        uint8 seat = findMemberSeat(msg.sender);
+        require(seat != 10);
+        members[seat] = address(0);
+        manager.revertGroup(msg.sender, address(this));
+    }
 }
