@@ -10,7 +10,14 @@ async function load_first() {
   if(groupAddr == "") {
     document.getElementById('contents').innerHTML = "<h1>403 Forbidden</h1>"
   } else {
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")) 
+    web3.eth.net.isListening()
+      .then(() => console.log('Ganache Connected'))
+      .catch((e) => {
+        web3 = new Web3("wss://ropsten.infura.io/ws/v3/e3fbfedc03444eb6b1491a84cf06eb02");
+        web3.eth.net.isListening().then(() => console.log('Infura Connected'))
+                                  .catch((e) => console.error(e));
+      });
 
     groupContract = new web3.eth.Contract(groupABI, groupAddr);
     addresses = await web3.eth.getAccounts();
