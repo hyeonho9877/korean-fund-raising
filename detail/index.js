@@ -1,62 +1,143 @@
 const managerAddress = "0xFD9236af22039B269d51E6473a4eadeE3444bbB5";
-const contractABI = [{
-    "anonymous": false,
-    "inputs": [{
-        "indexed": false,
-        "internalType": "address",
-        "name": "contractAddress",
-        "type": "address"
-    }, {"indexed": false, "internalType": "address", "name": "projectStarter", "type": "address"}, {
-        "indexed": false,
-        "internalType": "string",
-        "name": "projectTitle",
-        "type": "string"
-    }, {"indexed": false, "internalType": "string", "name": "projectDesc", "type": "string"}],
-    "name": "groupCreated",
-    "type": "event"
-}, {
-    "inputs": [{"internalType": "string", "name": "title", "type": "string"}, {
-        "internalType": "string",
-        "name": "description",
-        "type": "string"
-    }], "name": "createGroup", "outputs": [], "stateMutability": "nonpayable", "type": "function"
-}, {
-    "inputs": [],
-    "name": "getMyGroup",
-    "outputs": [{"internalType": "address[10]", "name": "", "type": "address[10]"}],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-}, {
-    "inputs": [{"internalType": "address", "name": "target", "type": "address"}],
-    "name": "getMyGroupCount",
-    "outputs": [{"internalType": "uint8", "name": "", "type": "uint8"}],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-}, {
-    "inputs": [{"internalType": "address", "name": "target", "type": "address"}, {
-        "internalType": "address",
-        "name": "groupAddress",
-        "type": "address"
-    }, {"internalType": "uint8", "name": "seat", "type": "uint8"}],
-    "name": "updateMyGroup",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-}, {
-    "inputs": [{"internalType": "address", "name": "member", "type": "address"}, {
-        "internalType": "address",
-        "name": "group",
-        "type": "address"
-    }], "name": "revertGroup", "outputs": [], "stateMutability": "nonpayable", "type": "function"
-}, {
-    "inputs": [{"internalType": "address", "name": "groupAddress", "type": "address"}],
-    "name": "destroyGroup",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-}];
+const contractABI = [
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "projectStarter",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "projectTitle",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "projectDesc",
+                "type": "string"
+            }
+        ],
+        "name": "groupCreated",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "title",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+            }
+        ],
+        "name": "createGroup",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getMyGroup",
+        "outputs": [
+            {
+                "internalType": "address[10]",
+                "name": "",
+                "type": "address[10]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "target",
+                "type": "address"
+            }
+        ],
+        "name": "getMyGroupCount",
+        "outputs": [
+            {
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "target",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "groupAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint8",
+                "name": "seat",
+                "type": "uint8"
+            }
+        ],
+        "name": "updateMyGroup",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "member",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "group",
+                "type": "address"
+            }
+        ],
+        "name": "revertGroup",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "groupAddress",
+                "type": "address"
+            }
+        ],
+        "name": "destroyGroup",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+];
 const groupABI = [
     {
         "inputs": [
