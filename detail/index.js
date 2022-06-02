@@ -399,6 +399,7 @@ async function getTBodyFromGroupMembers() {
     document.getElementById('pNumReservedSeat').innerHTML = (10 - memberCount);
     document.getElementById('pBalance').innerText = (parseInt(details.balance) / 10 ** 18) + ' ETH';
     document.getElementById('h1Title').innerHTML += details.name;
+    document.getElementById('group-address').innerHTML += groupAddr;
     document.getElementById('pDesc').innerText = details.desc;
     if (details.currentRequester !== '0x0000000000000000000000000000000000000000') {
         document.getElementById('requester').innerHTML = details.currentRequester;
