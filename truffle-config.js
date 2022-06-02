@@ -18,10 +18,10 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
 // const fs = require('fs');
-// const mnemonic = "";
+const mnemonic = "identify spoil employ pluck learn exhaust trim recycle inherit tornado mesh person";
 
 module.exports = {
   /**

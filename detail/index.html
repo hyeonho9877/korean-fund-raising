@@ -1,180 +1,206 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-    <title>그룹 디테일 | 탈중앙화 계모임</title>
+    <title>모임 상세 | 탈중앙화 계모임</title>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap');
 
-      .wrap {
-        font-family: 'Hahmlet', serif;
-        width: 100%;
-        height: 1000px;
-        background: linear-gradient(to bottom right, #F3F781,80%, #64FE2E);
-      }
+        .wrap {
+            font-family: 'Hahmlet', serif;
+            width: 100%;
+            height: 1000px;
+            background: linear-gradient(to bottom right, #F3F781, 80%, #64FE2E);
+        }
 
-      button{
-        font-family: 'Hahmlet', serif;
-        margin: auto;
-        width: 100px;
-        height: 35px;
-        border-radius: 15px;
-        border: 0;
-        outline: 0;
-        font-size: 15px;
-        background-color: rgba(255, 78, 78, 0.836);
-        color: #fff;
-        text-align: center;
-      }
-  
-      table {
-        font-family: 'Hahmlet', serif;
-        border-collapse: collapse;
-        background: #e5e5e5;
-        text-align: center;
-        line-height: 35px;
-      }
-  
-      table thead th {
-        width: 150px;
-        padding: 10px;
-        vertical-align: top;
-        color: #fff;
-        background: #959595;
-        margin: 20px 10px;
-      }
-  
-      table tbody th {
-        width: 150px;
-        padding: 10px;
-      }
-  
-      table td {
-        width: 350px;
-        padding: 10px;
-        vertical-align: top;
-      }
+        button {
+            font-family: 'Hahmlet', serif;
+            margin: auto;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            border: 0;
+            outline: 0;
+            font-size: 15px;
+            background-color: rgba(255, 78, 78, 0.836);
+            color: #fff;
+            text-align: center;
+        }
 
-      #btnReturn{
-        font-family: 'Hahmlet', serif;
-        margin: auto;
-        width: 160px;
-        height: 50px;
-        border-radius: 25px;
-        margin-right: 50px;
-        font-size: 15px;
-        background-color: rgb(171, 171, 171);
-        color: #fff;
-        text-align: center;
-        line-height: 35px;
-      }
-      #btnReturn:hover {
-        font-family: 'Hahmlet', serif;
-        transform: scale(1.05);
-      }
+        table {
+            font-family: 'Hahmlet', serif;
+            border-collapse: collapse;
+            background: #e5e5e5;
+            text-align: center;
+            line-height: 35px;
+        }
 
-      #btnPay {
-        font-family: 'Hahmlet', serif;
-        margin: auto;
-        width: 160px;
-        height: 50px;
-        border-radius: 25px;
-        font-size: 15px;
-        background-color: rgb(60, 199, 134);
-        color: #fff;
-        text-align: center;
-        line-height: 35px;
-        border-color: rgb(60, 199, 134);
-      }
+        table thead th {
+            width: 150px;
+            padding: 10px;
+            vertical-align: top;
+            color: #fff;
+            background: #959595;
+            margin: 20px 10px;
+        }
 
-      #btnPay:hover {
-        font-family: 'Hahmlet', serif;
-        transform: scale(1.05);
-      }
+        table tbody th {
+            width: 150px;
+            padding: 10px;
+        }
 
-      #btnDelete {
-        font-family: 'Hahmlet', serif;
-        margin: auto;
-        width: 160px;
-        height: 50px;
-        border-radius: 25px;
-        font-size: 15px;
-        background-color: rgb(60, 199, 134);
-        color: #fff;
-        text-align: center;
-        line-height: 35px;
-        border-color: rgb(60, 199, 134);
-      }
+        table td {
+            width: 350px;
+            padding: 10px;
+            vertical-align: top;
+        }
 
-      #btnDelete:hover{
-        font-family: 'Hahmlet', serif;
-        transform: scale(1.05);
-      }
-  
+        #btnReturn {
+            font-family: 'Hahmlet', serif;
+            margin: auto;
+            width: 160px;
+            height: 50px;
+            border-radius: 25px;
+            margin-right: 50px;
+            font-size: 15px;
+            background-color: rgb(171, 171, 171);
+            color: #fff;
+            text-align: center;
+            line-height: 35px;
+        }
+
+        #btnReturn:hover {
+            font-family: 'Hahmlet', serif;
+            transform: scale(1.05);
+        }
+
+        #btnPay {
+            font-family: 'Hahmlet', serif;
+            margin: auto;
+            width: 160px;
+            height: 50px;
+            border-radius: 25px;
+            font-size: 15px;
+            background-color: rgb(60, 199, 134);
+            color: #fff;
+            text-align: center;
+            line-height: 35px;
+            border-color: rgb(60, 199, 134);
+        }
+
+        #btnRequestWithdraw {
+            font-family: 'Hahmlet', serif;
+            margin: auto;
+            width: 160px;
+            height: 50px;
+            border-radius: 25px;
+            font-size: 15px;
+            background-color: rgb(60, 199, 134);
+            color: #fff;
+            text-align: center;
+            line-height: 35px;
+            border-color: rgb(60, 199, 134);
+        }
+
+        #btnPay:hover {
+            font-family: 'Hahmlet', serif;
+            transform: scale(1.05);
+        }
+
+        #btnDelete {
+            font-family: 'Hahmlet', serif;
+            margin: auto;
+            width: 160px;
+            height: 50px;
+            border-radius: 25px;
+            font-size: 15px;
+            background-color: rgb(60, 199, 134);
+            color: #fff;
+            text-align: center;
+            line-height: 35px;
+            border-color: rgb(60, 199, 134);
+        }
+
+        #btnDelete:hover {
+            font-family: 'Hahmlet', serif;
+            transform: scale(1.05);
+        }
+
     </style>
-  </head>
-  <body class="wrap">
-    <script src="index.js"></script>
+</head>
+<body class="wrap">
+<script src="index.js"></script>
 
-    <div id="contents">
-      <h1 id="h1Title">그룹 디테일: </h1>
-      <p id="pDesc">그룹 설명이 비어 있습니다.</p>
-      <br>
-      <div>
-        <h2>1. 그룹 소속 멤버</h2>
+<div id="contents">
+    <h1 id="h1Title">모임 이름 : </h1>
+    <h2 id="pDesc">모임 설명이 비어 있습니다.</h2>
+    <br>
+    <div>
+        <h2>현재 출금 요청자</h2>
+        <p id="requester">없음</p>
+        <h2>현재 출금 요청 금액</h2>
+        <p id="request-amount">없음</p>
+        <div id="agree-statement"></div>
+        <h2>1. 모임 소속 멤버</h2>
         <p>
-          <table>
+        <table>
             <thead>
-              <tr>
+            <tr>
                 <th scope="cols">이름</th>
+                <th scope="cols">마지막 입금 기록</th>
                 <th scope="cols">추방</th>
-              </tr>
+            </tr>
             </thead>
             <tbody id="tbodyMemberList">
-              <!-- <tr>
-                <td>김가가</td>
-                <td><button id="btnOut" onclick="functionAlert()">추방</button></td>
-              </tr>
-              <tr>
-                <td class="even">이나나</td>
-                <td class="even"><button id="btnOut" onclick="functionAlert()">추방</button></td>
-              </tr>
-              <tr>
-                <td>박다다</td>
-                <td><button id="btnOut" onclick="functionAlert()">추방</button></td>
-              </tr>
-              <tr>
-                <td class="even">최라라</td>
-                <td class="even"><button id="btnOut" onclick="functionAlert()">추방</button>
-              </tr> -->
+            <!-- <tr>
+              <td>김가가</td>
+              <td><button id="btnOut" onclick="functionAlert()">추방</button></td>
+            </tr>
+            <tr>
+              <td class="even">이나나</td>
+              <td class="even"><button id="btnOut" onclick="functionAlert()">추방</button></td>
+            </tr>
+            <tr>
+              <td>박다다</td>
+              <td><button id="btnOut" onclick="functionAlert()">추방</button></td>
+            </tr>
+            <tr>
+              <td class="even">최라라</td>
+              <td class="even"><button id="btnOut" onclick="functionAlert()">추방</button>
+            </tr> -->
             </tbody>
-          </table>
+        </table>
         </p>
-      </div>
-  
-      <div>
-        <h2>2. 그룹 잔고 </h2>
-        <p id="pBalance"></p>
-      </div>
+    </div>
 
-      <div>
+    <div>
+        <h2>2. 모임 잔고 </h2>
+        <p id="pBalance"></p>
+    </div>
+
+    <div>
         <h2>3. 남은 자리의 수</h2>
         <p id="pNumReservedSeat"></p>
-      </div>
-
-      <div>
-        <h2>4. 계 비용 지불하기</h2>
-        <button id="btnPay" onclick="location.href='../pay.index.html'">비용 지불하러 가기</button>
-      </div>
-
-      <div>
-        <h2>5. 그룹 삭제하기</h2>
-        <button id="btnDestroy" onclick="destroyGroup();" style="cursor:pointer;">그룹 삭제하기</button>
-      </div>
     </div>
-  </body>
-  <br><br><br><br><br>
+
+    <div>
+        <h2>4. 계 비용 지불하기</h2>
+        <button id="btnPay" onclick="deposit();">비용 지불하러 가기</button>
+    </div>
+    <div>
+        <h2>5. 계 출금 요청하기</h2>
+        <button id="btnRequestWithdraw" onclick="requestWithdraw();">출금 요청하기</button>
+    </div>
+
+    <div>
+        <h2>6. 모임 삭제하기</h2>
+        <button id="btnDestroy" onclick="destroyGroup();" style="cursor:pointer;">모임 삭제하기</button>
+    </div>
+</div>
+</body>
+<br><br><br><br><br>
 <footer>
-  <button id="btnReturn" style="margin: auto; display: block;" onclick=history.back(); style="cursor: pointer;">돌아가기</div>
-  </footer>
+    <button id="btnReturn" style="margin: auto; display: block;" onclick=history.back(); style="cursor: pointer;">
+        돌아가기</div>
+</footer>

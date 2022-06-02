@@ -20,6 +20,8 @@ contract Group {
     string private groupDesc;
     // 동의 현황
     uint8 private agreement;
+    // 동의한 구성원 리스트
+    address[10] agreedMembers;
     // 현재 출금 요청을 처리 중이니 나타내는 bool 변수
     bool private isRaising;
     // 그룹 매니저 컨트랙트
@@ -60,6 +62,7 @@ contract Group {
     // 그룹에서 진행되고 있는 출금 요청에 대한 동의를 반영하는 메소드
     function agree() public {
         require(msg.sender != requester);
+        require(!isAlreadyAgreed(msg.sender));
         require(requester != address(0));
         require(findMemberSeat(msg.sender) != 10);
         agreement += 1;
@@ -69,6 +72,7 @@ contract Group {
             agreement = 0;
             isRaising = false;
             requestAmount = 0;
+            clearAgreements();
             requester = payable(address(0));
             currentBalance -= amount;
             targetAddress.transfer(amount);
@@ -102,7 +106,7 @@ contract Group {
     }
 
     // 그룹의 상태를 확인하는 메소드
-    function getDetails() public view returns (address payable owner, string memory name, string memory desc, uint256 balance, address[10] memory membersResponse, address currentRequester, bool isCurrentRaising, uint currentRequestAmount) {
+    function getDetails() public view returns (address payable owner, string memory name, string memory desc, uint256 balance, address[10] memory membersResponse, address currentRequester, bool isCurrentRaising, uint currentRequestAmount, uint8 agreed, address[10] memory agreedMembersList) {
         owner = creator;
         name = groupName;
         desc = groupDesc;
@@ -111,6 +115,21 @@ contract Group {
         isCurrentRaising = isRaising;
         currentRequester = requester;
         currentRequestAmount = requestAmount;
+        agreed = agreement;
+        agreedMembersList = agreedMembers;
+    }
+
+    function isAlreadyAgreed(address member) private view returns(bool result){
+        result = false;
+        for(uint i=0;i<10;i++){
+            if(agreedMembers[i] == member) result = true;
+        }
+    }
+
+    function clearAgreements() private {
+        for(uint i=0; i<10; i++){
+            agreedMembers[i] = address(0);
+        }
     }
 
     // 그룹에 가입하는 메소드
